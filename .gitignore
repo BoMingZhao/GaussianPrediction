@@ -1,0 +1,7 @@
+*.pyc
+.vscode
+**/__pycache__
+results/*
+datasets/*
+build/*
+logs/*

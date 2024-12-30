@@ -1,0 +1,12 @@
+trimesh==4.0.5
+plyfile==0.8.1
+tqdm
+tensorboard
+prettytable
+open3d
+einops
+kmeans_pytorch
+opencv_python
+pytorch_msssim
+imageio
+torch-scatter==2.1.1
