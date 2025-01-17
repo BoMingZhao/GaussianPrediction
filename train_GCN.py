@@ -104,6 +104,10 @@ def train_gcn(args, opt, gaussians, scene, pipeline, background, iteration=60000
     
     os.makedirs(os.path.join(args.model_path, args.exp_name), exist_ok=True)
     torch.save(model.state_dict(), os.path.join(args.model_path, args.exp_name, "ckpt.pth"))
+xyz_inputs_cache = batch["xyz_inputs"].clone()
+    xyz_gt_cache = batch["xyz_gt"].clone()
+    rotation_inputs_cache = batch["rotation_inputs"].clone()
+    rotation_gt_cache = batch["rotation_gt"].clone()
     if predict_more:
         frames = args.frames
         with torch.no_grad():
@@ -111,10 +115,6 @@ def train_gcn(args, opt, gaussians, scene, pipeline, background, iteration=60000
             for key in batch.keys():
                 if isinstance(batch[key], torch.Tensor):
                     batch[key] = batch[key].unsqueeze(0)
-            xyz_inputs_cache = batch["xyz_inputs"].clone()
-            xyz_gt_cache = batch["xyz_gt"].clone()
-            rotation_inputs_cache = batch["rotation_inputs"].clone()
-            rotation_gt_cache = batch["rotation_gt"].clone()
             kpts = []
             kpts_rotation = []
             views = scene.getTestCameras()[args.cam_id:]
