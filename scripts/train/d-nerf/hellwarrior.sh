@@ -22,6 +22,6 @@ CUDA_VISIBLE_DEVICES=0 python train.py -s $source_path \
     -m $model_path --max_points $max_keypoints --adaptive_points_num $adaptive_points_num \
     --iterations 60000 --test_iterations 60000 --jointly_iteration 1000 --time_freq $time_freq \
     --densify_from_iter 3000 --densify_until_iter 20000 --norm_rotation \
-    --save_iterations 29999 60000 --checkpoint_iterations 29999 60000  \
+    --save_iterations 29999 60000 --checkpoint_iterations 29999 60000 --max_time $max_time \
     --position_lr_max_steps $position_lr_max_steps --adaptive_from_iter $adaptive_from_iter --seed $seed  \
     --eval --nearest_num $nearest_num --adaptive_interval 500 --feature_amplify $feature_amplify
