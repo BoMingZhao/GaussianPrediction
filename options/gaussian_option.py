@@ -35,6 +35,7 @@ class Gaussian_Options:
         self.parser.add_argument("--noise_init", default=0.1, type=float)
         self.parser.add_argument("--noise_step", default=100, type=int)
         self.parser.add_argument("--exp_name", default="", type=str)
+        self.parser.add_argument("--evaluate", action='store_true', default=False)
         
     
     def initial(self):

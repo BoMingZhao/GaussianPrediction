@@ -1,12 +1,6 @@
-if [ $# -eq 0 ]; then
-    echo "Seed: 1*2024"
-    seed=1
-else
-    seed=$1 
-fi
-
 scene_name="hellwarrior"
 max_keypoints=100
+max_time=0.8
 time_freq=6
 adaptive_points_num=100
 nearest_num=6

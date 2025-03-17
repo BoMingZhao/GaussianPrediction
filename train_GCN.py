@@ -78,32 +78,45 @@ def train_gcn(args, opt, gaussians, scene, pipeline, background, iteration=60000
 
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epoch, eta_min=1.e-4)
     # t_bar = tqdm(total=args.epoch*len(trainLoarder))
-    t_bar = tqdm(total=args.epoch)
-    t_bar.set_description('[Train GCN]')
-    for epoch in range(args.epoch):
-        loss_avg = 0.
-        for idx, batch in enumerate(trainLoarder):
-            noise_xyz = 0.
-            noise_r = 0.
-            if args.noise_init > 0:
-                noise_xyz = args.noise_init * max(1.-epoch/args.noise_step, 0.)
-                noise_r = args.noise_init * max((1.-epoch / args.noise_step), 0.) * 0.5
+    if args.evaluate:
+        try:
+            model.load_state_dict(torch.load(os.path.join(args.model_path, args.exp_name, "ckpt.pth")))
+        except:
+            error_path = os.path.join(args.model_path, args.exp_name, "ckpt.pth")
+            raise Exception(f"Can not load checkpoint of GCN from {error_path}.")
 
-            xyz_pred, xyz_gt, r_pred, r_gt = operate(args, batch, model, noise_xyz=noise_xyz, noise_r=noise_r)
-            loss = torch.mean(torch.norm(xyz_pred - xyz_gt, 2, -1)) + torch.mean(torch.norm(r_pred - r_gt, 2, -1))
+    else:
+        t_bar = tqdm(total=args.epoch)
+        t_bar.set_description('[Train GCN]')
+        for epoch in range(args.epoch):
+            loss_avg = 0.
+            for idx, batch in enumerate(trainLoarder):
+                noise_xyz = 0.
+                noise_r = 0.
+                if args.noise_init > 0:
+                    noise_xyz = args.noise_init * max(1.-epoch/args.noise_step, 0.)
+                    noise_r = args.noise_init * max((1.-epoch / args.noise_step), 0.) * 0.5
 
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+                xyz_pred, xyz_gt, r_pred, r_gt = operate(args, batch, model, noise_xyz=noise_xyz, noise_r=noise_r)
+                loss = torch.mean(torch.norm(xyz_pred - xyz_gt, 2, -1)) + torch.mean(torch.norm(r_pred - r_gt, 2, -1))
 
-            loss_avg += loss
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+
+                loss_avg += loss
+            
+            t_bar.set_postfix(loss=loss_avg.item() / (idx + 1), lr=optimizer.param_groups[0]['lr'], noise_xyz=noise_xyz, noise_r=noise_r)
+            t_bar.update(1)
+            scheduler.step()
         
-        t_bar.set_postfix(loss=loss_avg.item() / (idx + 1), lr=optimizer.param_groups[0]['lr'], noise_xyz=noise_xyz, noise_r=noise_r)
-        t_bar.update(1)
-        scheduler.step()
-    
-    os.makedirs(os.path.join(args.model_path, args.exp_name), exist_ok=True)
-    torch.save(model.state_dict(), os.path.join(args.model_path, args.exp_name, "ckpt.pth"))
+        os.makedirs(os.path.join(args.model_path, args.exp_name), exist_ok=True)
+        torch.save(model.state_dict(), os.path.join(args.model_path, args.exp_name, "ckpt.pth"))
+
+    batch = test_dataset[0]
+    for key in batch.keys():
+        if isinstance(batch[key], torch.Tensor):
+            batch[key] = batch[key].unsqueeze(0)
     xyz_inputs_cache = batch["xyz_inputs"].clone()
     xyz_gt_cache = batch["xyz_gt"].clone()
     rotation_inputs_cache = batch["rotation_inputs"].clone()
@@ -111,10 +124,6 @@ def train_gcn(args, opt, gaussians, scene, pipeline, background, iteration=60000
     if predict_more:
         frames = args.frames
         with torch.no_grad():
-            batch = test_dataset[0]
-            for key in batch.keys():
-                if isinstance(batch[key], torch.Tensor):
-                    batch[key] = batch[key].unsqueeze(0)
             kpts = []
             kpts_rotation = []
             views = scene.getTestCameras()[args.cam_id:]
