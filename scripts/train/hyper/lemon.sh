@@ -1,10 +1,10 @@
-scene_name="cut-lemon-new"
+scene_name="cut-lemon"
 time_freq=10
 feature_amplify=5
 max_keypoints=100
 adaptive_points_num=200
 nearest_num=6
-max_time=1.0
+max_time=0.8
 source_path="./datasets/HyperNeRF/${scene_name}/"
 model_path="./results/HyperNeRF_${max_time}/${scene_name}/finalVersion"
 position_lr_max_steps=40000
@@ -12,7 +12,7 @@ data_device="cpu"
 step_opacity_iteration=5000
 
 # Train
-CUDA_VISIBLE_DEVICES=0 python train.py -s $source_path \
+CUDA_VISIBLE_DEVICES=1 python train.py -s $source_path \
     -m $model_path --max_points $max_keypoints --adaptive_points_num $adaptive_points_num  \
     --iterations 70000 --test_iterations 70000 --jointly_iteration 1000  --time_freq $time_freq\
     --densify_from_iter 5000 --save_iterations 29998 70000 --checkpoint_iterations 29998 70000 \

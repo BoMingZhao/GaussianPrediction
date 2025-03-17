@@ -1,4 +1,4 @@
-scene_name="vrig-3dprinter-new"
+scene_name="vrig-3dprinter"
 time_freq=8
 max_keypoints=150
 adaptive_points_num=100
@@ -13,7 +13,7 @@ epoch=2001
 linear_size=128
 exp_name="input${input_size}_stage${num_stage}_hidden${linear_size}_noise${noise_init}_RNoise${R_ratio}_noiseStep${noise_step}_epoch${epoch}"
 
-model_path="./results/HyperNeR_F${max_time}/${scene_name}/finalVersion/"
+model_path="./results/HyperNeRF${max_time}/${scene_name}/finalVersion/"
 
 CUDA_VISIBLE_DEVICES=0 python train_GCN.py -m $model_path --max_points $max_keypoints --time_freq $time_freq \
     --adaptive_points_num $adaptive_points_num --ckpt_iteration 70000 --max_time $max_time \

@@ -1,4 +1,4 @@
-scene_name="cut-lemon-new"
+scene_name="cut-lemon"
 time_freq=10
 max_keypoints=100
 adaptive_points_num=200

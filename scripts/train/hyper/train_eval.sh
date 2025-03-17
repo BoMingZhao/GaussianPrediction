@@ -12,8 +12,8 @@ else
     exit 1
 fi
 
-# ./scripts/train/hyper/lemon.sh 
-# wait
+./scripts/train/hyper/lemon.sh 
+wait
 ./scripts/eval/hyper/lemon.sh 
 wait
 
@@ -22,13 +22,13 @@ wait
 ./scripts/eval/hyper/chickchicken.sh 
 wait
 
-# ./scripts/train/hyper/printer.sh 
-# wait
+./scripts/train/hyper/printer.sh 
+wait
 ./scripts/eval/hyper/printer.sh 
 wait
 
-# ./scripts/train/hyper/torchocolate.sh 
-# wait
+./scripts/train/hyper/torchocolate.sh 
+wait
 ./scripts/eval/hyper/torchocolate.sh 
 wait
 

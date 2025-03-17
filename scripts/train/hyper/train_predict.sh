@@ -17,9 +17,9 @@ wait
 ./scripts/predict/hyper/lemon.sh 
 wait
 
-./scripts/train/hyper/inter_chicken.sh 
+./scripts/train/hyper/chickchicken.sh 
 wait
-./scripts/predict/hyper/inter_chicken.sh 
+./scripts/predict/hyper/chickchicken.sh 
 wait
 
 ./scripts/train/hyper/printer.sh 
