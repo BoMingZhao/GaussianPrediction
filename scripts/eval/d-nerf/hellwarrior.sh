@@ -3,7 +3,7 @@ max_keypoints=100
 adaptive_points_num=100
 time_freq=6
 nearest_num=6
-max_time=1.0
+max_time=0.8
 feature_amplify=0.5
 
 model_path="./results/d-nerf_${max_time}/${scene_name}/finalVersion/"

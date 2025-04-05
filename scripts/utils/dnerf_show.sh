@@ -2,7 +2,7 @@ root="./results"
 model_path="finalVersion"
 
 ### Max time == 1 (reconsturction results)
-max_time=1.0
+max_time=0.8
 dataset="d-nerf_${max_time}"
 python show.py -r $root -d $dataset -m $model_path
 

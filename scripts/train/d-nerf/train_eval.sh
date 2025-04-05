@@ -13,38 +13,38 @@ else
 fi
 
 # Train
-./scripts/train/d-nerf/bouncingballs.sh
-wait
-./scripts/eval/d-nerf/bouncingballs.sh
-wait
+# ./scripts/train/d-nerf/bouncingballs.sh
+# wait
+# ./scripts/eval/d-nerf/bouncingballs.sh
+# wait
 
-./scripts/train/d-nerf/hellwarrior.sh
-wait
+# ./scripts/train/d-nerf/hellwarrior.sh
+# wait
 ./scripts/eval/d-nerf/hellwarrior.sh 
 wait
 
-./scripts/train/d-nerf/hook.sh 
-wait
+# ./scripts/train/d-nerf/hook.sh 
+# wait
 ./scripts/eval/d-nerf/hook.sh 
 wait
 
-./scripts/train/d-nerf/mutant.sh 
-wait
+# ./scripts/train/d-nerf/mutant.sh 
+# wait
 ./scripts/eval/d-nerf/mutant.sh 
 wait
 
-./scripts/train/d-nerf/standup.sh 
-wait
+# ./scripts/train/d-nerf/standup.sh 
+# wait
 ./scripts/eval/d-nerf/standup.sh 
 wait
 
-./scripts/train/d-nerf/jumping.sh 
-wait
+# ./scripts/train/d-nerf/jumping.sh 
+# wait
 ./scripts/eval/d-nerf/jumping.sh 
 wait
 
-./scripts/train/d-nerf/trex.sh
-wait
+# ./scripts/train/d-nerf/trex.sh
+# wait
 ./scripts/eval/d-nerf/trex.sh
 wait
 
